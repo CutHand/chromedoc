@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImgHandle</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div class="container-fluid" id="app">
+        <nav class="navbar navbar-light bg-light">
+            <dic class="container-fluid">
+                <a href="#" class="navbar-brand">
+                    <img src="./img/cat.png" alt="cat" width="30px"> ImgHandle
+                </a>
+            </dic>
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div id="dropEl" class="col d-flex justify-content-center align-items-center handle-tip">
+                    <canvas id="canvas" @dragenter.stop.prevent @drop.stop.prevent="drop" @dragover.stop.prevent
+                        class="border border-5 rounded rounded-2 shadow canvas"></canvas>
+                </div>
+                <aside class="col setting">
+                    <div class="mb-3">
+                        <label for="txtLogo" class="form-label">文本内容：</label>
+                        <textarea class="form-control" v-model="addTxt" name="txtLogo" id="txtLogo" rows="5"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">字体</span>
+                                <input class="form-control" v-model="txtFamily" name="txtFamily" id="txtFamily"
+                                    type="text">
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">颜色</span>
+                                <input class="form-control" v-model="txtColor" name="txtColor" id="txtColor"
+                                    type="text">
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">字体大小</span>
+                                <input class="form-control" v-model="txtSize" name="txtSize" id="txtSize" type="number">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">行间距</span>
+                                <input class="form-control" v-model="txtLineHeight" name="txtLineHeight"
+                                    id="txtLineHeight" type="number">
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">左边距</span>
+                                <input class="form-control" v-model="txtLeft" name="txtLeft" id="txtLeft" type="number">
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">下边距</span>
+                                <input class="form-control" v-model="txtBottom" name="txtBottom" id="txtBottom"
+                                    type="number">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col-6">
+                            <div class="input-group" data-bs-toggle="tooltip" data-bs-placement="bottom" title="请在拖入图片前设置宽度">
+                                <span class="input-group-text">输出图片宽度</span>
+                                <input type="number" v-model="ctxWidth" name="ctxWidth" id="ctxWidth" class="form-control">
+                            </div>
+                        </div>
+                        
+                        <div class="col-3 ml-auto d-flex justify-content-end">
+                            <button class="btn btn-primary" id="addTxt" @click="addtext">文字Set</button>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-text">Logo右边距</span>
+                                <input type="number" v-model="logoRight" name="logoRight" id="logoRight" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-text">Logo下边距</span>
+                                <input type="number" v-model="logoBottom" name="logoBottom" id="logoBottom" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center mb-5">
+                        <div class="col-3">
+                            <div class="form-check">
+                                <input type="radio" v-model="imgLogo" value="android" id="android"
+                                    class="form-check-input" checked>
+                                <label for="android" class="form-check-label">安卓水印</label>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-check">
+                                <input type="radio" v-model="imgLogo" value="apple" id="apple" class="form-check-input">
+                                <label for="apple" class="form-check-label">苹果水印</label>
+                            </div>
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                            <button class="ml-auto btn btn-primary" id="addTxt" @click="addLogo">LogoSet</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 d-flex justify-content-end ml-auto">
+                            <button class="btn btn-primary" @click="flash">flash</button>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/script.js"></script>
+</body>
+
+</html>
