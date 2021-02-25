@@ -86,7 +86,7 @@ const app = new Vue({
                     logoImg.src = './img/apple.png'
                 }
                 logoImg.onload = () => {
-                    let width = this.ctxWidth * 0.8
+                    let width = this.ctxWidth * 0.5
                     let height = width * logoImg.height / logoImg.width
                     this.ctx.drawImage(logoImg, (this.ctxWidth - width) / 2, (this.ctxHeight - height) / 2, width, height)
                 }
