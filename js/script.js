@@ -33,24 +33,6 @@ const app = new Vue({
         }
     }
     , computed: {
-        // txtSize: function () {
-        //     return Math.round(this.ctxWidth * 0.05)
-        // }
-        // ,txtLeft: function () {
-        //     return Math.round(this.ctxWidth * 0.01827)
-        // }
-        // ,txtBottom: function () {
-        //     return Math.round(this.ctxWidth * 0.01827)
-        // }
-        // ,txtLineHeight: function () {
-        //     return Math.round(this.ctxWidth * 0.00781)
-        // }
-        // ,logoRight: function () {
-        //     return Math.round(this.ctxWidth * 0.01827)
-        // }
-        // ,logoBottom: function () {
-        //     return Math.round(this.ctxWidth * 0.01827)
-        // }
     }
     , methods: {
         addtext() {
@@ -65,9 +47,7 @@ const app = new Vue({
                 let arr = this.addTxt.split('\n')
                 arr.forEach((e, i) => {
                     // 
-                    this.ctx.fillText(e, this.txtLeft, this.ctxHeight - this.txtBottom - (arr.length - i - 1) * this.txtSize - (arr.length - 
-
-i - 1) * this.txtLineHeight)
+                    this.ctx.fillText(e, this.txtLeft, this.ctxHeight - this.txtBottom - (arr.length - i - 1) * this.txtSize - (arr.length - i - 1) * this.txtLineHeight)
                 });
                 this.imgDataText = document.querySelector('#canvas').toDataURL()
             }
@@ -103,9 +83,7 @@ i - 1) * this.txtLineHeight)
                 brandImg.onload = () => {
                     let width = this.ctxWidth * 0.1
                     let height = width * brandImg.height / brandImg.width
-                    this.ctx.drawImage(brandImg, this.ctxWidth - width - this.logoRight, this.ctxHeight - height - 
-
-this.logoBottom, width, height)
+                    this.ctx.drawImage(brandImg, this.ctxWidth - width - this.logoRight, this.ctxHeight - height - this.logoBottom, width, height)
                 }
             }
             imgObj.src = this.imgDataText == null ? this.imgData : this.imgDataText
@@ -115,7 +93,6 @@ this.logoBottom, width, height)
          * 先判断文件是不是图片
          * 设置画板的宽，高度为等比例
          * 将拖入的图片上板，大小和板子一样大
-         * 
          * 设置板子的CSS样式与真实的大小一样
          */
         , handleFiles(files) {
@@ -135,20 +112,55 @@ this.logoBottom, width, height)
             reader.readAsDataURL(file)
         }
         , flash() {
-            let r = confirm("点击确认所有数据将重置！");
+            let r = confirm("点击确认画板将清空！");
             if (r == true) {
                 location.reload()
             }
+        }
+        , saveData() {
+            let handleData = {
+                addTxt: this.addTxt
+                , imgLogo: this.imgLogo
+                , txtColor: this.txtColor
+                , txtFamily: this.txtFamily
+                , txtSize: this.txtSize
+                , txtLineHeight: this.txtLineHeight
+                , txtLeft: this.txtLeft
+                , txtBottom: this.txtBottom
+                , logoRight: this.logoRight
+                , logoBottom: this.logoBottom
+                , ctxWidth: this.ctxWidth
+            }
+            localStorage.setItem("handleData", JSON.stringify(handleData))
+        }
+        , removeData() {
+            localStorage.removeItem("handleData")
         }
     }
     , beforeCreate() {
 
     }
     , created() {
-
+        let handleData = localStorage.getItem("handleData")
+        if (handleData != null) {
+            handleData = JSON.parse(handleData)
+            this.ctxWidth = handleData.ctxWidth
+            setTimeout(() => {
+                this.addTxt = handleData.addTxt
+                this.imgLogo = handleData.imgLogo
+                this.txtColor = handleData.txtColor
+                this.txtFamily = handleData.txtFamily
+                this.txtSize = handleData.txtSize
+                this.txtLineHeight = handleData.txtLineHeight
+                this.txtLeft = handleData.txtLeft
+                this.txtBottom = handleData.txtBottom
+                this.logoRight = handleData.logoRight
+                this.logoBottom = handleData.logoBottom
+            }, 0)
+        }
+        console.log('created', handleData)
     }
     , beforeMount() {
-
     }
     , mounted() {
         // 挂在之后添加拖拽事件监听
