@@ -1,11 +1,11 @@
-﻿'use strict';
+'use strict';
 const ctxWidth = 383
 const app = new Vue({
     el: '.setting'
     , data: {
         message: ''
         , imgLogo: 'android'
-        , addTxt: 'Hello!'
+        , addTxt: 'H\ne\nl\nl\no\n!'
         , txtColor: 'red'
         , txtFamily: '黑体'
         , txtSize: Math.round(ctxWidth * 0.05)
@@ -61,8 +61,10 @@ const app = new Vue({
                 this.ctx.drawImage(imgObj, 0, 0)
                 this.ctx.fillStyle = this.txtColor
                 this.ctx.font = `${this.txtSize}px ${this.txtFamily}`;
+                this.ctx.textBaseline = "bottom"
                 let arr = this.addTxt.split('\n')
                 arr.forEach((e, i) => {
+                    // 
                     this.ctx.fillText(e, this.txtLeft, this.ctxHeight - this.txtBottom - (arr.length - i - 1) * this.txtSize - (arr.length - i - 1) * this.txtLineHeight)
                 });
                 this.imgDataText = document.querySelector('#canvas').toDataURL()
