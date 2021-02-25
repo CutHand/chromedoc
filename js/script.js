@@ -5,10 +5,10 @@ const app = new Vue({
     , data: {
         message: ''
         , imgLogo: 'android'
-        , addTxt: 'H\ne\nl\nl\no\n!'
+        , addTxt: '经度：121.546143\n纬度：31.224654\n地址：上海市上海市公安局出入境管理局\n时间：2021-02-25 09:44:34'
         , txtColor: 'red'
         , txtFamily: '黑体'
-        , txtSize: Math.round(ctxWidth * 0.05)
+        , txtSize: Math.round(ctxWidth * 0.03394)
         , txtLineHeight: Math.round(ctxWidth * 0.00781)
         , txtLeft: Math.round(ctxWidth * 0.01827)
         , txtBottom: Math.round(ctxWidth * 0.01827)
@@ -24,7 +24,7 @@ const app = new Vue({
     }
     , watch: {
         ctxWidth: function (val) {
-            this.txtSize = Math.round(val * 0.05)
+            this.txtSize = Math.round(val * 0.03394)
             this.txtLeft = Math.round(val * 0.01827)
             this.txtBottom = Math.round(val * 0.01827)
             this.logoRight = Math.round(val * 0.01827)
@@ -65,7 +65,9 @@ const app = new Vue({
                 let arr = this.addTxt.split('\n')
                 arr.forEach((e, i) => {
                     // 
-                    this.ctx.fillText(e, this.txtLeft, this.ctxHeight - this.txtBottom - (arr.length - i - 1) * this.txtSize - (arr.length - i - 1) * this.txtLineHeight)
+                    this.ctx.fillText(e, this.txtLeft, this.ctxHeight - this.txtBottom - (arr.length - i - 1) * this.txtSize - (arr.length - 
+
+i - 1) * this.txtLineHeight)
                 });
                 this.imgDataText = document.querySelector('#canvas').toDataURL()
             }
@@ -101,7 +103,9 @@ const app = new Vue({
                 brandImg.onload = () => {
                     let width = this.ctxWidth * 0.1
                     let height = width * brandImg.height / brandImg.width
-                    this.ctx.drawImage(brandImg, this.ctxWidth - width - this.logoRight, this.ctxHeight - height - this.logoBottom, width, height)
+                    this.ctx.drawImage(brandImg, this.ctxWidth - width - this.logoRight, this.ctxHeight - height - 
+
+this.logoBottom, width, height)
                 }
             }
             imgObj.src = this.imgDataText == null ? this.imgData : this.imgDataText
