@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -66,12 +66,14 @@
                     </div>
                     <div class="row mb-5">
                         <div class="col-6">
-                            <div class="input-group" data-bs-toggle="tooltip" data-bs-placement="bottom" title="请在拖入图片前设置宽度">
+                            <div class="input-group" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                title="请在拖入图片前设置宽度">
                                 <span class="input-group-text">输出图片宽度</span>
-                                <input type="number" v-model="ctxWidth" name="ctxWidth" id="ctxWidth" class="form-control">
+                                <input type="number" v-model="ctxWidth" name="ctxWidth" id="ctxWidth"
+                                    class="form-control">
                             </div>
                         </div>
-                        
+
                         <div class="col-3 ml-auto d-flex justify-content-end">
                             <button class="btn btn-primary" id="addTxt" @click="addtext">文字Set</button>
                         </div>
@@ -80,13 +82,15 @@
                         <div class="col-6">
                             <div class="input-group">
                                 <span class="input-group-text">Logo右边距</span>
-                                <input type="number" v-model="logoRight" name="logoRight" id="logoRight" class="form-control">
+                                <input type="number" v-model="logoRight" name="logoRight" id="logoRight"
+                                    class="form-control">
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="input-group">
                                 <span class="input-group-text">Logo下边距</span>
-                                <input type="number" v-model="logoBottom" name="logoBottom" id="logoBottom" class="form-control">
+                                <input type="number" v-model="logoBottom" name="logoBottom" id="logoBottom"
+                                    class="form-control">
                             </div>
                         </div>
                     </div>
@@ -109,6 +113,14 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-3">
+                            <button class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="参数会保存进浏览器" @click="saveData">保存数据</button>
+                        </div>
+                        <div class="col-3">
+                            <button class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="将数据从浏览器中移除" @click="removeData">移除保存</button>
+                        </div>
                         <div class="col-4 d-flex justify-content-end ml-auto">
                             <button class="btn btn-primary" @click="flash">flash</button>
                         </div>
