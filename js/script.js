@@ -1,5 +1,25 @@
 'use strict';
-const ctxWidth = 383
+const ctxWidth = 1000
+
+function dataURLtoFile(dataurl, filename = 'file') {
+    let arr = dataurl.split(',')
+    let mime = arr[0].match(/:(.*?);/)[1]
+    let suffix = mime.split('/')[1]
+    let bstr = atob(arr[1])
+    let n = bstr.length
+    let u8arr = new Uint8Array(n)
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+    }
+    return new File([u8arr], `${filename}.${suffix}`, {
+        type: mime
+    })
+}
+// var base64Img = imgDataUrl // base64编码的图片
+// var imgFile = dataURLtoFile(base64Img)
+// console.log('imgFile=>', imgFile)
+
+
 const app = new Vue({
     el: '.setting'
     , data: {
@@ -35,6 +55,7 @@ const app = new Vue({
     , computed: {
     }
     , methods: {
+
         addtext() {
             // 清空画布
             this.ctx.clearRect(0, 0, this.ctxWidth, this.ctxHeight)
@@ -77,7 +98,7 @@ const app = new Vue({
                 if (this.imgLogo == 'android') {
                     brandImg.src = './img/androidBrand.png'
                     brandImg.onload = () => {
-                        let width = this.ctxWidth * 0.1
+                        let width = this.ctxWidth * 0.12
                         let height = width * brandImg.height / brandImg.width
                         this.ctx.drawImage(brandImg, this.ctxWidth - width - this.logoRight, this.ctxHeight - height - this.logoBottom, width, height)
                     }
@@ -90,7 +111,7 @@ const app = new Vue({
                         this.ctx.drawImage(brandImg, this.ctxWidth - width, this.ctxHeight - height, width, height)
                     }
                 }
-                
+
             }
             imgObj.src = this.imgDataText == null ? this.imgData : this.imgDataText
         }
@@ -112,6 +133,7 @@ const app = new Vue({
                 this.ctx.drawImage(imgEl, 0, 0, this.ctxWidth, this.ctxHeight)
                 this.ctx.canvas.style.width = '100%'
                 this.imgData = document.querySelector('#canvas').toDataURL();
+                console.log(this.dataURLtoFile(this.imgData))
             }
             let reader = new FileReader()
             reader.onload = (aImg => e => aImg.src = e.target.result)(imgEl)
@@ -142,60 +164,77 @@ const app = new Vue({
         , removeData() {
             localStorage.removeItem("handleData")
         }
+        , dataURLtoFile(urlData, type="image/png") {
+            let arr = urlData.split(',');
+            let mime = arr[0].match(/:(.*?);/)[1] || type;
+            // 去掉url的头，并转化为byte
+            let bytes = window.atob(arr[1]);
+            console.log(bytes)
+            // 处理异常,将ascii码小于0的转换为大于0
+            let ab = new ArrayBuffer(bytes.length);
+            // 生成视图（直接针对内存）：8位无符号整数，长度1个字节
+            let ia = new Uint8Array(ab);
+            for (let i = 0; i < bytes.length; i++) {
+                ia[i] = bytes.charCodeAt(i);
+            }
+            return new Blob([ab], {
+                type: mime
+            });
+        }
     }
     , beforeCreate() {
 
-    }
+}
     , created() {
-        let handleData = localStorage.getItem("handleData")
-        if (handleData != null) {
-            handleData = JSON.parse(handleData)
-            this.ctxWidth = handleData.ctxWidth
-            setTimeout(() => {
-                this.addTxt = handleData.addTxt
-                this.imgLogo = handleData.imgLogo
-                this.txtColor = handleData.txtColor
-                this.txtFamily = handleData.txtFamily
-                this.txtSize = handleData.txtSize
-                this.txtLineHeight = handleData.txtLineHeight
-                this.txtLeft = handleData.txtLeft
-                this.txtBottom = handleData.txtBottom
-                this.logoRight = handleData.logoRight
-                this.logoBottom = handleData.logoBottom
-            }, 0)
-        }
-        console.log('created', handleData)
+    let handleData = localStorage.getItem("handleData")
+    if (handleData != null) {
+        handleData = JSON.parse(handleData)
+        this.ctxWidth = handleData.ctxWidth
+        setTimeout(() => {
+            this.addTxt = handleData.addTxt
+            this.imgLogo = handleData.imgLogo
+            this.txtColor = handleData.txtColor
+            this.txtFamily = handleData.txtFamily
+            this.txtSize = handleData.txtSize
+            this.txtLineHeight = handleData.txtLineHeight
+            this.txtLeft = handleData.txtLeft
+            this.txtBottom = handleData.txtBottom
+            this.logoRight = handleData.logoRight
+            this.logoBottom = handleData.logoBottom
+        }, 0)
     }
+    console.log('created', handleData)
+}
     , beforeMount() {
-    }
+}
     , mounted() {
-        // 挂在之后添加拖拽事件监听
-        let dropbox = document.querySelector("#dropEl");
-        dropbox.addEventListener("dragenter", function (e) {
-            e.stopPropagation();
-            e.preventDefault();
-            if (e.target.className == "canvas") {
-                e.target.style.background = "purple";
-            }
-        }, false);
-        dropbox.addEventListener("dragover", function (e) {
-            e.stopPropagation();
-            e.preventDefault();
-        }, false);
-        dropbox.addEventListener("drop", event => {
-            event.stopPropagation();
-            event.preventDefault();
-            let dt = event.dataTransfer;
-            let files = dt.files;
-            console.log('drop event has happend')
-            document.querySelector('.handle-tip').classList.remove('handle-tip')
-            document.querySelector('#ctxWidth').setAttribute('disabled', true)
-            this.handleFiles(files);
-        }, false);
+    // 挂在之后添加拖拽事件监听
+    let dropbox = document.querySelector("#dropEl");
+    dropbox.addEventListener("dragenter", function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        if (e.target.className == "canvas") {
+            e.target.style.background = "purple";
+        }
+    }, false);
+    dropbox.addEventListener("dragover", function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    }, false);
+    dropbox.addEventListener("drop", event => {
+        event.stopPropagation();
+        event.preventDefault();
+        let dt = event.dataTransfer;
+        let files = dt.files;
+        console.log('drop event has happend')
+        document.querySelector('.handle-tip').classList.remove('handle-tip')
+        document.querySelector('#ctxWidth').setAttribute('disabled', true)
+        this.handleFiles(files);
+    }, false);
 
-        let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl)
-        })
-    }
+    let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+}
 })
