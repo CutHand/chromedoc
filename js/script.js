@@ -76,15 +76,21 @@ const app = new Vue({
                 let brandImg = new Image()
                 if (this.imgLogo == 'android') {
                     brandImg.src = './img/androidBrand.png'
+                    brandImg.onload = () => {
+                        let width = this.ctxWidth * 0.1
+                        let height = width * brandImg.height / brandImg.width
+                        this.ctx.drawImage(brandImg, this.ctxWidth - width - this.logoRight, this.ctxHeight - height - this.logoBottom, width, height)
+                    }
                 }
                 if (this.imgLogo == 'apple') {
                     brandImg.src = './img/appleBrand.png'
+                    brandImg.onload = () => {
+                        let width = this.ctxWidth * 0.3
+                        let height = width * brandImg.height / brandImg.width
+                        this.ctx.drawImage(brandImg, this.ctxWidth - width, this.ctxHeight - height, width, height)
+                    }
                 }
-                brandImg.onload = () => {
-                    let width = this.ctxWidth * 0.1
-                    let height = width * brandImg.height / brandImg.width
-                    this.ctx.drawImage(brandImg, this.ctxWidth - width - this.logoRight, this.ctxHeight - height - this.logoBottom, width, height)
-                }
+                
             }
             imgObj.src = this.imgDataText == null ? this.imgData : this.imgDataText
         }
