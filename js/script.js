@@ -157,9 +157,18 @@ const app = new Vue({
             console.log('drop event has happend', files)
             this.handleFiles(files)
         }
+        , dragenterHandle() {
+            document.querySelector('#canvas').style.background = "rgba(0,0,0,0.1)";
+        }
         , fileHandle(e) {
             console.log(e.target.files)
             this.handleFiles(e.target.files)
+        }
+        , outImg() {
+            const outImg = document.querySelector('#outImg')
+            console.log(outImg)
+            outImg.src = document.querySelector('#canvas').toDataURL()
+            outImg.classList.remove('d-none')
         }
     }
     , beforeCreate() {
