@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -21,17 +21,25 @@
         </nav>
         <div class="container">
             <div class="row">
-                <div id="dropEl" class="col d-flex justify-content-center align-items-center handle-tip">
-                    <canvas id="canvas" @dragenter.stop.prevent @drop.stop.prevent="drop" @dragover.stop.prevent
-                        class="border border-5 rounded rounded-2 shadow canvas"></canvas>
+                <div id="dropEl" @dragenter.stop.prevent @dragover.stop.prevent @drop.stop.prevent="dropHandle" class="col d-flex justify-content-center align-items-center position-relative">
+                    <div class="handle-tip position-absolute top-50 start-50 translate-middle d-flex flex-column align-items-center">
+                        <div class="d-none">
+                            <input type="file" @change="fileHandle" class="form-control" name="chooseImg" id="chooseImg">
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button @click="chooseBtn" class="btn btn-primary" id="chooseImgBtn">选择图片</button>
+                        </div>
+                        <p class="handle-tip-text m-0 fw-light text-black-50">或拖拽图片到此处</p>
+                    </div>
+                    <canvas id="canvas" class="border my-4 border-1 rounded rounded-2 shadow"></canvas>
                 </div>
-                <aside class="col setting">
+                <aside class="col">
                     <div class="mb-3">
                         <label for="txtLogo" class="form-label">文本内容：</label>
                         <textarea class="form-control" v-model="addTxt" name="txtLogo" id="txtLogo" rows="5"></textarea>
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-md">
                             <div class="input-group mb-2">
                                 <span class="input-group-text">字体</span>
                                 <input class="form-control" v-model="txtFamily" name="txtFamily" id="txtFamily"
@@ -47,7 +55,7 @@
                                 <input class="form-control" v-model="txtSize" name="txtSize" id="txtSize" type="number">
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col">
                             <div class="input-group mb-2">
                                 <span class="input-group-text">行间距</span>
                                 <input class="form-control" v-model="txtLineHeight" name="txtLineHeight"
@@ -65,7 +73,7 @@
                         </div>
                     </div>
                     <div class="row mb-5">
-                        <div class="col-6">
+                        <div class="col-md">
                             <div class="input-group" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                 title="请在拖入图片前设置宽度">
                                 <span class="input-group-text">输出图片宽度</span>
@@ -73,20 +81,19 @@
                                     class="form-control">
                             </div>
                         </div>
-
-                        <div class="col-3 ml-auto d-flex justify-content-end">
+                        <div class="col my-4 my-sm-0 ml-auto d-flex justify-content-end">
                             <button class="btn btn-primary" id="addTxt" @click="addtext">文字Set</button>
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-6">
+                        <div class="col-md">
                             <div class="input-group">
                                 <span class="input-group-text">Logo右边距</span>
                                 <input type="number" v-model="logoRight" name="logoRight" id="logoRight"
                                     class="form-control">
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col">
                             <div class="input-group">
                                 <span class="input-group-text">Logo下边距</span>
                                 <input type="number" v-model="logoBottom" name="logoBottom" id="logoBottom"
@@ -95,14 +102,14 @@
                         </div>
                     </div>
                     <div class="row align-items-center mb-5">
-                        <div class="col-3">
+                        <div class="col-md">
                             <div class="form-check">
                                 <input type="radio" v-model="imgLogo" value="android" id="android"
                                     class="form-check-input" checked>
                                 <label for="android" class="form-check-label">安卓水印</label>
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-md">
                             <div class="form-check">
                                 <input type="radio" v-model="imgLogo" value="apple" id="apple" class="form-check-input">
                                 <label for="apple" class="form-check-label">苹果水印</label>
@@ -113,15 +120,15 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-6 col-sm-3">
                             <button class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
-                            title="参数会保存进浏览器" @click="saveData">保存数据</button>
+                                title="参数会保存进浏览器" @click="saveData">保存数据</button>
                         </div>
-                        <div class="col-3">
+                        <div class="col-6 col-sm-3">
                             <button class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
-                            title="将数据从浏览器中移除" @click="removeData">移除保存</button>
+                                title="将数据从浏览器中移除" @click="removeData">移除保存</button>
                         </div>
-                        <div class="col-4 d-flex justify-content-end ml-auto">
+                        <div class="col my-4 my-sm-0 d-flex justify-content-end ml-auto">
                             <button class="btn btn-primary" @click="flash">flash</button>
                         </div>
                     </div>
@@ -129,9 +136,9 @@
             </div>
         </div>
     </div>
+    <script src="./js/vue.min.js"></script>
     <script src="./js/popper.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
-    <script src="./js/vue.min.js"></script>
     <script src="./js/script.js"></script>
 </body>
 
