@@ -1,41 +1,9 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* #app {
-    width: 100%;
-    padding-top: 150px;
-    display: flex;
-    justify-content: space-around;
-} */
-
-#dropbox {
-    width: 150px;
-    height: 80px;
-    border: 1px solid;
-}
-
-.setting {
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-}
-
-.setting>label {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.handle-tip {
-    position: relative;
-}
-
-.handle-tip::after {
-    content: '拖拽图片到此处';
-    position: absolute;
+/* .handle-tip-text{
     color: rgba(95, 95, 95, 0.7);
     letter-spacing: 3px;
     font-size: 18px;
-}
+} */
+/* #canvas{
+    width: 150px;
+    height: 80px;
+} */
